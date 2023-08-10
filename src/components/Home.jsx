@@ -1,6 +1,7 @@
 import {Canvas} from "@react-three/fiber";
 import Cylinder3d from "./Cylinder3d";
 import IndoorMap from "./IndoorMap";
+import React from "react";
 
 function Home() {
     return (

@@ -6,6 +6,7 @@ import {Environment, OrbitControls} from "@react-three/drei";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {Suspense} from "react";
 import {PerspectiveCamera} from '@react-three/drei'
+import Button from "./Button";
 
 const Model = () => {
     const gltf = useLoader(GLTFLoader, "./demo-level.glb");
@@ -17,6 +18,9 @@ const IndoorMap = () => {
     const d = 35;
     const agentHeight = 1.0;
     const agentRadius = 0.25;
+    const onClick = () => {
+        console.log("On Button clicked");
+    }
     return (
         <Suspense fallback={null}>
             <ambientLight intensity={0.5} color={"white"}/>
@@ -31,7 +35,9 @@ const IndoorMap = () => {
                     bottom: -d
                 }
             }}/>
+
             <Model/>
+            <Button onClick={onClick}/>
             <group position={[0, 1, 0]}>
                 <mesh position={[0, agentHeight / 2, 0]}>
                     <cylinderGeometry args={[agentRadius, agentRadius, agentHeight]}/>
