@@ -8,6 +8,7 @@ import {Suspense} from "react";
 import {PerspectiveCamera} from '@react-three/drei'
 import Button from "./Button";
 import {Pathfinding, PathfindingHelper} from "three-pathfinding";
+import * as THREE from "three";
 
 
 const IndoorMap = () => {
@@ -16,18 +17,30 @@ const IndoorMap = () => {
     const agentRadius = 0.25;
     const ZONE = 'level1b';
 
-
-    const ref = useRef({
+    const navMeshGeometryRef = useRef({
         navMeshGeometry: null
+    });
+
+    const navPathRef = useRef({
+        navPath: null
     });
 
     const onClick = () => {
         console.log("On Button clicked");
-        console.log("Nave mesh value ", ref.current.navMeshGeometry);
-        const navMeshGeometry = ref.current.navMeshGeometry;
+        console.log("Nave mesh value ", navMeshGeometryRef.current.navMeshGeometry);
+        const navMeshGeometry = navMeshGeometryRef.current.navMeshGeometry;
         const pathfinding = new Pathfinding();
         pathfinding.setZoneData(ZONE, Pathfinding.createZone(navMeshGeometry));
+
+        let target = {"x": 0, "y": 1, "z": 0};
+        const agentpos = {"x": -3.038174055847791, "y": 5, "z": -4.375253161572642};
+        const groupID = pathfinding.getGroup(ZONE, agentpos);
+        const closest = pathfinding.getClosestNode(agentpos, ZONE, groupID);
+        const navpath = pathfinding.findPath(closest.centroid, target, ZONE, groupID);
+        console.log("NAV path", navpath);
+        navPathRef.current.navPath = navpath;
     }
+
 
     const BaseModel = () => {
         const gltf = useLoader(GLTFLoader, "./demo-level.glb");
@@ -40,9 +53,9 @@ const IndoorMap = () => {
         const {scene} = useLoader(GLTFLoader, "./demo-level-navmesh.glb");
 
         useMemo(() => scene.traverse(node => {
-            if (!ref.current.navMeshGeometry && node.isObject3D && node.children && node.children.length > 0) {
+            if (!navMeshGeometryRef.current.navMeshGeometry && node.isObject3D && node.children && node.children.length > 0) {
                 console.log("Geometry assign started")
-                ref.current.navMeshGeometry = node.children[0].geometry;
+                navMeshGeometryRef.current.navMeshGeometry = node.children[0].geometry;
                 console.log("Geometry assigned")
             }
 
@@ -65,6 +78,7 @@ const IndoorMap = () => {
 
         <BaseModel/>
         <NavMeshModel/>
+        {/*<Line/>*/}
         <Button onClick={onClick}/>
         <group position={[0, 1, 0]}>
             <mesh position={[0, agentHeight / 2, 0]}>
