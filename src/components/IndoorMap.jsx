@@ -1,13 +1,9 @@
-import React, {useMemo, useRef, useState} from 'react';
-import {useFrame} from "@react-three/fiber";
-
-import {useLoader} from "@react-three/fiber";
-import {Environment, OrbitControls} from "@react-three/drei";
+import React, {Suspense, useMemo, useRef} from 'react';
+import {useFrame, useLoader} from "@react-three/fiber";
+import {OrbitControls, PerspectiveCamera} from "@react-three/drei";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
-import {Suspense} from "react";
-import {PerspectiveCamera} from '@react-three/drei'
 import Button from "./Button";
-import {Pathfinding, PathfindingHelper} from "three-pathfinding";
+import {Pathfinding} from "three-pathfinding";
 import * as THREE from "three";
 
 
@@ -24,6 +20,69 @@ const IndoorMap = () => {
     const navPathRef = useRef({
         navPath: null
     });
+
+    const NavPath = [
+        {
+            "x": 2.6,
+            "y": 5.1,
+            "z": -1.5
+        },
+        {
+            "x": 2.8,
+            "y": 5.1,
+            "z": -1.3
+        },
+        {
+            "x": 2.8,
+            "y": 5.1,
+            "z": 2.5
+        },
+        {
+            "x": 2.6,
+            "y": 5.1,
+            "z": 2.7
+        },
+        {
+            "x": -5.5,
+            "y": 5.1,
+            "z": 6
+        },
+        {
+            "x": -5.7,
+            "y": 5,
+            "z": 6.4
+        },
+        {
+            "x": -5.6,
+            "y": 5,
+            "z": 6.6
+        },
+        {
+            "x": 6.4,
+            "y": 1.1,
+            "z": 6.5
+        },
+        {
+            "x": 6.5,
+            "y": 1.1,
+            "z": 5.6
+        },
+        {
+            "x": 6.5,
+            "y": 1.1,
+            "z": 3.1
+        },
+        {
+            "x": 6.4,
+            "y": 1.1,
+            "z": 2.2
+        },
+        {
+            "x": 0,
+            "y": 1,
+            "z": 0
+        }
+    ]
 
     const onClick = () => {
         console.log("On Button clicked");
@@ -78,7 +137,9 @@ const IndoorMap = () => {
 
         <BaseModel/>
         <NavMeshModel/>
-        {/*<Line/>*/}
+
+        {/*<NormalLine2 start={[0,0,0]} end={[1,1,0]} />*/}
+        {/*<NormalLine2 start={[1,1,0]} end={[2,0,0]} />*/}
         <Button onClick={onClick}/>
         <group position={[0, 1, 0]}>
             <mesh position={[0, agentHeight / 2, 0]}>
