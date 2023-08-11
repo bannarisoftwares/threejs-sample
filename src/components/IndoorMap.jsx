@@ -5,6 +5,8 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import Button from "./Button";
 import {Pathfinding} from "three-pathfinding";
 import * as THREE from "three";
+import PathLine from "./PathLine";
+import NormalLine from "./NormalLine";
 
 
 const IndoorMap = () => {
@@ -21,68 +23,7 @@ const IndoorMap = () => {
         navPath: null
     });
 
-    const NavPath = [
-        {
-            "x": 2.6,
-            "y": 5.1,
-            "z": -1.5
-        },
-        {
-            "x": 2.8,
-            "y": 5.1,
-            "z": -1.3
-        },
-        {
-            "x": 2.8,
-            "y": 5.1,
-            "z": 2.5
-        },
-        {
-            "x": 2.6,
-            "y": 5.1,
-            "z": 2.7
-        },
-        {
-            "x": -5.5,
-            "y": 5.1,
-            "z": 6
-        },
-        {
-            "x": -5.7,
-            "y": 5,
-            "z": 6.4
-        },
-        {
-            "x": -5.6,
-            "y": 5,
-            "z": 6.6
-        },
-        {
-            "x": 6.4,
-            "y": 1.1,
-            "z": 6.5
-        },
-        {
-            "x": 6.5,
-            "y": 1.1,
-            "z": 5.6
-        },
-        {
-            "x": 6.5,
-            "y": 1.1,
-            "z": 3.1
-        },
-        {
-            "x": 6.4,
-            "y": 1.1,
-            "z": 2.2
-        },
-        {
-            "x": 0,
-            "y": 1,
-            "z": 0
-        }
-    ]
+
 
     const onClick = () => {
         console.log("On Button clicked");
@@ -137,6 +78,8 @@ const IndoorMap = () => {
 
         <BaseModel/>
         <NavMeshModel/>
+        <PathLine/>
+
 
         {/*<NormalLine2 start={[0,0,0]} end={[1,1,0]} />*/}
         {/*<NormalLine2 start={[1,1,0]} end={[2,0,0]} />*/}
@@ -147,6 +90,7 @@ const IndoorMap = () => {
                 <meshPhongMaterial attach="material" color={"green"}/>
             </mesh>
         </group>
+        <PathLine/>
         <OrbitControls enablePan={true}
                        enableDamping={true}
                        minDistance={5}
