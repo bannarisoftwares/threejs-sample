@@ -24,7 +24,6 @@ const IndoorMap = () => {
     });
 
 
-
     const onClick = () => {
         console.log("On Button clicked");
         console.log("Nave mesh value ", navMeshGeometryRef.current.navMeshGeometry);
@@ -66,41 +65,43 @@ const IndoorMap = () => {
     };
 
 
-    return (<Suspense fallback={null}>
-        <ambientLight intensity={0.5} color={"white"}/>
-        <directionalLight color="white" intensity={0.8} position={[20, 30, 0]} castShadow={true} shadow={{
-            mapSize: {
-                width: 4096, height: 4096
-            }, camera: {
-                left: -d, right: d, top: d, bottom: -d
-            }
-        }}/>
+    return (
 
-        <BaseModel/>
-        <NavMeshModel/>
-        <PathLine/>
+        <Suspense fallback={null}>
+            <ambientLight intensity={0.5} color={"white"}/>
+            <directionalLight color="white" intensity={0.8} position={[20, 30, 0]} castShadow={true} shadow={{
+                mapSize: {
+                    width: 4096, height: 4096
+                }, camera: {
+                    left: -d, right: d, top: d, bottom: -d
+                }
+            }}/>
+
+            <BaseModel/>
+            <NavMeshModel/>
+            <PathLine/>
 
 
-        {/*<NormalLine2 start={[0,0,0]} end={[1,1,0]} />*/}
-        {/*<NormalLine2 start={[1,1,0]} end={[2,0,0]} />*/}
-        <Button onClick={onClick}/>
-        <group position={[0, 1, 0]}>
-            <mesh position={[0, agentHeight / 2, 0]}>
-                <cylinderGeometry args={[agentRadius, agentRadius, agentHeight]}/>
-                <meshPhongMaterial attach="material" color={"green"}/>
-            </mesh>
-        </group>
-        <PathLine/>
-        <OrbitControls enablePan={true}
-                       enableDamping={true}
-                       minDistance={5}
-                       maxDistance={60}
-                       maxPolarAngle={Math.PI / 2 - 0.05}
-                       minPolarAngle={Math.PI / 4}/>
-        {/*<Environment preset="sunset" background/>*/}
-        <PerspectiveCamera fov={45} aspect={window.innerWidth / window.innerHeight} near={0.1} far={1000}
-                           position={[10, 10, 33]}/>
-    </Suspense>);
+            {/*<NormalLine2 start={[0,0,0]} end={[1,1,0]} />*/}
+            {/*<NormalLine2 start={[1,1,0]} end={[2,0,0]} />*/}
+            <Button onClick={onClick}/>
+            <group position={[0, 1, 0]}>
+                <mesh position={[0, agentHeight / 2, 0]}>
+                    <cylinderGeometry args={[agentRadius, agentRadius, agentHeight]}/>
+                    <meshPhongMaterial attach="material" color={"green"}/>
+                </mesh>
+            </group>
+            <PathLine/>
+            <OrbitControls enablePan={true}
+                           enableDamping={true}
+                           minDistance={5}
+                           maxDistance={60}
+                           maxPolarAngle={Math.PI / 2 - 0.05}
+                           minPolarAngle={Math.PI / 4}/>
+            {/*<Environment preset="sunset" background/>*/}
+            <PerspectiveCamera fov={45} aspect={window.innerWidth / window.innerHeight} near={0.1} far={1000}
+                               position={[10, 10, 33]}/>
+        </Suspense>);
 };
 
 export default IndoorMap;
